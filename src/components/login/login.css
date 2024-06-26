@@ -1,0 +1,131 @@
+/* login  */
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+  }
+  
+  .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    background-image: url(../assert/loginbackground.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  .mmlogo {
+    width: 50px;
+    height: 50px;
+    border-radius: 80%;
+  
+  }
+  
+  .logincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    height: 500px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(246, 246, 249);
+  }
+  
+  
+  .loginimg {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 1px solid #ddd;
+    width: 500px;
+    height: 500px;
+    padding: 20px;
+    background-color: rgb(246, 246, 249);
+    border-right: none;
+  }
+  
+  .limg {
+    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    padding: 15px;
+    border-radius: 20px !important;
+  }
+  
+  .logintitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .inputname,
+  .inputpass {
+    padding: 10px;
+    width: 300px;
+    border: 1.7px solid rgb(177, 175, 175);
+  }
+  
+  .usernamediv,
+  .userpassdiv {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  
+  .loginbtn {
+    width: 100%;
+    height: 40px;
+  }
+  
+  .signup-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #1890ff;
+    cursor: pointer;
+  }
+  
+  .signup-link span {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 5px;
+  }
+  
+  
+  .inputpass-container {
+    position: relative;
+  }
+  
+  .inputpass {
+    padding-right: 30px;
+  }
+  
+  .inputpass .ant-input-suffix {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .modal_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: .3cm;
+  }
+  
+  ::placeholder {
+    color: rgb(84, 81, 81) !important;
+  }
