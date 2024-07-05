@@ -1,0 +1,73 @@
+.App {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+.controlers{
+    display: flex;
+    justify-content:space-between;
+    margin-left:80px;
+    margin-right: 80px;
+}
+
+  h1 {
+    text-align: center;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-expense, .expense-report {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .expense-report {
+    background-color: #28a745;
+  }
+  
+  .search-input {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .filter-button {
+    padding: 5px 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .edit-button, .delete-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+  }
+  

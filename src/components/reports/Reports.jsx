@@ -1,7 +1,7 @@
 import React from 'react'
 import SideBar from '../sidebar/SideBar';
 
-const Saving = () => {
+const Reports = () => {
   return (
     <>
       <div className="containre">
@@ -10,7 +10,7 @@ const Saving = () => {
           <SideBar/>
         </div>
         <div className="content_container">
-          <center><h1>Budget</h1></center>
+          <center><h1>Reports</h1></center>
         </div>
         <div></div>
       </div>
@@ -18,4 +18,4 @@ const Saving = () => {
   )
 }
 
-export default Saving
+export default Reports

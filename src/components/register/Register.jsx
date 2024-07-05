@@ -1,5 +1,3 @@
-// Register.jsx
-
 import React, { useState } from 'react';
 import './register.css';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +5,7 @@ import { notification } from 'antd';
 import loginimg from '../assert/login.jpg';
 import mmlog from '../assert/mmlogo.jpeg'
 
-
-
 function Register() {
-
   const [api, contextHolder] = notification.useNotification();
 
   const openNotification = (placement) => {
@@ -47,11 +42,20 @@ function Register() {
   const [passwordError, setPasswordError] = useState('');
   const [cpasswordError, setCPasswordError] = useState('');
 
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs()) {
+      
+      const userDetails = {
+        username,
+        email,
+        password
+      };
+
+      const existingUsers = JSON.parse(localStorage.getItem('userDetails')) || [];
+      existingUsers.push(userDetails);
+      localStorage.setItem('userDetails', JSON.stringify(existingUsers));
+
       openNotification('bottomLeft');
       console.log('Form submitted successfully');
     }
@@ -63,7 +67,11 @@ function Register() {
     if (username.trim() === '') {
       success = false;
       setUsernameError('Username is required');
-    } else {
+    } else if (username.length < 4) {
+      success = false;
+      setUsernameError('Username must be at least 4 characters long');
+    }
+    else {
       setUsernameError('');
     }
 
@@ -112,24 +120,23 @@ function Register() {
 
   return (
     <div className="login">
-      <div className='r' >
-        <div className="registerimg" >
-          <img className="rimg" src={loginimg} alt={loginimg} />
+      <div className='r'>
+        <div className="registerimg">
+          <img className="rimg" src={loginimg} alt="login" />
         </div>
       </div>
 
       <div className="registerncontainer">
-        <div style={{ backgroundColor: "limegreen" }} >
+        <div style={{ backgroundColor: "limegreen" }}>
           {contextHolder}
         </div>
-        <form onSubmit={handleSubmit} className='form' >
-          <div >
-            <img className='mmlogo' src={mmlog} alt={'mmlogo'} />
+        <form onSubmit={handleSubmit} className='form'>
+          <div>
+            <img className='mmlogo' src={mmlog} alt='mmlogo' />
           </div>
-          <div >
-          <span style={{ fontFamily: 'cursive', fontSize: "12px", fontWeight: "555", color: 'gray'  }} >Welcome To Our Website &#x1F44B; </span>
-
-            <p style={{ fontFamily: 'cursive', fontSize: "11px", fontWeight: "555", color: 'gray' }} > Enter your details below to create your account and get started. </p>
+          <div>
+            <span style={{ fontFamily: 'cursive', fontSize: "12px", fontWeight: "555", color: 'gray' }}>Welcome To Our Website &#x1F44B; </span>
+            <p style={{ fontFamily: 'cursive', fontSize: "11px", fontWeight: "555", color: 'gray' }}>Enter your details below to create your account and get started.</p>
           </div>
           <div className={`input-group ${usernameError && 'error'}`}>
             <input
@@ -138,16 +145,18 @@ function Register() {
               id="username"
               name="username"
               value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <div className="error">{usernameError}</div>
           </div>
           <div className={`input-group ${emailError && 'error'}`}>
             <input
-              placeholder='Enter Email '
+              placeholder='Enter Email'
               type="text"
               id="email"
               name="email"
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="error">{emailError}</div>
           </div>
@@ -158,6 +167,7 @@ function Register() {
               id="password"
               name="password"
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <div className="error">{passwordError}</div>
           </div>
@@ -168,11 +178,12 @@ function Register() {
               id="cpassword"
               name="cpassword"
               value={cpassword}
+              onChange={(e) => setCPassword(e.target.value)}
             />
             <div className="error">{cpasswordError}</div>
           </div>
-          <button type="submit" onClick={(e) => { handleSubmit(e); }} >SIGN UP</button>
-          <p style={{ textAlign: "center", fontFamily: 'cursive', marginTop:"10px" }} >Already have an account ? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => { page('/') }} > Login  </span> </p>
+          <button type="submit" className='sign_btn'>SIGN UP</button>
+          <p style={{ textAlign: "center", fontFamily: 'cursive', marginTop: "10px" }}>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => { page('/') }}>Sign In</span></p>
         </form>
       </div>
     </div>

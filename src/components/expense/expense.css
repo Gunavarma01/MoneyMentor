@@ -1,0 +1,184 @@
+.expense_container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: whitesmoke;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100vh !important;
+}
+
+.expense_con {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.controlers {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 10%;
+}
+
+h1 {
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-expense,
+.expense-report {
+    background-color: rgb(227, 26, 26);
+    border: none;
+    color: white;
+    padding: 16px 25px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-expense:hover {
+    background-color: rgb(255, 0, 0);
+    border-radius: 8px;
+    box-shadow: 0 8px 9px rgba(0, 0, 0, 0.1);
+}
+
+.expense-report {
+    background-color:  rgb(43, 106, 193);
+}
+
+.expenses_amt, .expenses_des{
+    color: red;
+}
+.expense-report:hover {
+    box-shadow: 0 8px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #159e35;
+}
+
+.search-input {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.filter-button {
+    padding: 5px 10px;
+}
+
+.expenses_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; 
+}
+
+.expenses_table_div{
+    height: 430px;
+    overflow-y: scroll;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.edit-button,
+.delete-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+/* General Modal Styles */
+.modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    height: 250px;
+}
+
+.amount {
+    margin-left: 25px;
+}
+
+.modal-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Form Styles */
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.expense_form_div {
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.input {
+    width: 50%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    margin-left: 5px;
+}
+
+.input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.add_button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 25px;
+    margin-top: 10px;
+
+}
+
+.add_button:hover {
+    background-color: #0056b3;
+}
