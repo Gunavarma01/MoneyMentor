@@ -1,5 +1,6 @@
 import React from 'react'
 import SideBar from '../sidebar/SideBar';
+import ExpenseReport from '../expense/ExpenseReport';
 
 const Settings = () => {
 
@@ -13,6 +14,7 @@ const Settings = () => {
                 </div>
                 <div className="content_container">
                     <center><h1>Settings</h1></center>
+                    <ExpenseReport/>
                 </div>
                 <div></div>
             </div>
@@ -21,3 +23,4 @@ const Settings = () => {
 }
 
 export default Settings
+

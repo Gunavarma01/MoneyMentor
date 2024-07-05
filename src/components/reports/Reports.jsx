@@ -1,5 +1,6 @@
 import React from 'react'
 import SideBar from '../sidebar/SideBar';
+import ReportChart from '../home/ReportChart';
 
 const Reports = () => {
   return (

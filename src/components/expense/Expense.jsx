@@ -3,9 +3,11 @@ import SideBar from '../sidebar/SideBar';
 import { useNavigate } from 'react-router-dom';
 import './expense.css';
 import { Modal } from 'antd';
+import ExpenseReport from './ExpenseReport';
 
 const Expense = () => {
   const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
@@ -14,6 +16,7 @@ const Expense = () => {
 
     const newTransaction = {
       type: 'expense',
+      category,
       description,
       amount,
       date: new Date().toLocaleString()
@@ -32,9 +35,11 @@ const Expense = () => {
   };
 
   const initialExpenses = calculateTotal("expense");
-
   const [expenses, setExpenses] = useState(initialExpenses);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
+
+
   const handleDelete = (id) => {
     setExpenses(expenses.filter(expense => expense.id !== id));
   };
@@ -49,44 +54,11 @@ const Expense = () => {
         <div className="expense_con">
           <div className="expense_container">
 
-            <Modal
-              title="Add Expense"
-              open={isModalOpen}
-              onCancel={() => { setIsModalOpen(false); }}
-              footer={null}
-            >
-              <div className="modal">
-                <form className="form" onSubmit={handleSubmit}>
-                  <div className='expense_form_div'>
-                    <label className="label">Description:</label>
-                    <input
-                      type="text"
-                      className="input"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="label amount">Amount:</label>
-                    <input
-                      type="number"
-                      className="input"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                  </div>
-
-                  <button type="submit" className="add_button">Add Expense</button>
-                </form>
-              </div>
-            </Modal>
-
             <h1>Personal Expense Manager</h1>
             <div className="controlers">
               <div className="buttons">
                 <button className="add-expense" onClick={() => { setIsModalOpen(true); }}>Add Expense</button>
-                <button className="expense-report">Expense Report</button>
+                <button className="expense-report" onClick={() => { setIsModalOpen2(true); }}  >Expense Report</button>
               </div>
               <div className="searchdiv">
                 <input type="text" placeholder="Search" className="search-input" />
@@ -98,6 +70,7 @@ const Expense = () => {
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Category</th>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>ExpenseDate</th>
@@ -108,6 +81,7 @@ const Expense = () => {
                   {expenses.length > 0 ? expenses.map((i, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td className='expenses_des' >{i.category.toUpperCase()}</td>
                       <td className='expenses_des' >{i.description.toUpperCase()}</td>
                       <td className='expenses_amt'>₹{parseFloat(i.amount).toFixed(2)}</td>
                       <td>{i.date}</td>
@@ -118,7 +92,7 @@ const Expense = () => {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="5">
+                      <td colSpan="6">
                         <h2>No Data To Display</h2>
                       </td>
                     </tr>
@@ -130,6 +104,58 @@ const Expense = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        title="Add Expense"
+        open={isModalOpen}
+        onCancel={() => { setIsModalOpen(false); }}
+        footer={null}
+      >
+        <div className="modal">
+          <form className="form" onSubmit={handleSubmit}>
+            <div className='income_form_div_category'>
+              <label className="label">Category:</label>
+              <input
+                type="text"
+                className="input"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              />
+            </div>
+            <div className='expense_form_div'>
+              <label className="label">Description:</label>
+              <input
+                type="text"
+                className="input"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="label amount">Amount:</label>
+              <input
+                type="number"
+                className="input"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+
+            <button type="submit" className="add_button">Add Expense</button>
+          </form>
+        </div>
+      </Modal>
+
+
+      <Modal
+        title="Expense Report"
+        open={isModalOpen2}
+        onCancel={() => { setIsModalOpen2(false); }}
+        footer={null}
+      >
+        <ExpenseReport setIsModalOpen2={setIsModalOpen2} setIsModalOpen={setIsModalOpen} />
+      </Modal>
     </>
   );
 };

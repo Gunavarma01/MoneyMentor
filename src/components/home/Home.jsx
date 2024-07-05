@@ -2,10 +2,13 @@ import React, { useContext, useState } from 'react';
 import SideBar from '../sidebar/SideBar';
 import './home.css'
 import DataContext from '../../context/DataContext';
+import ReportChart from './ReportChart';
+import { Modal } from 'antd';
 
 const Dashboard = () => {
   const { loginUserName } = useContext(DataContext);
   const [transactions, setTransactions] = useState(JSON.parse(localStorage.getItem('transactions')) || []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const calculateTotal = (type) => {
 
@@ -36,6 +39,7 @@ const Dashboard = () => {
 
           <header className="header">
             <h1 className='username' >Welcome {loginUserName}</h1>
+            <button className="income-report" onClick={() => { setIsModalOpen(true); }}>Report</button>
           </header>
 
           <div className="balances">
@@ -77,6 +81,7 @@ const Dashboard = () => {
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Category</th>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Date</th>
@@ -88,6 +93,7 @@ const Dashboard = () => {
                     transactions.map((transaction, index) => (
                       <tr key={index} className={transaction.type}>
                         <td>{index + 1}</td>
+                        <td>{transaction.category.toUpperCase()}</td>   
                         <td>{transaction.description.toUpperCase()}</td>   
                         <td>₹{parseFloat(transaction.amount).toFixed(2)}</td>
                         <td className="date">{transaction.date}</td>
@@ -95,7 +101,7 @@ const Dashboard = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="4">
+                      <td colSpan="5">
                         <h2>No Data To Display</h2>
                       </td>
                     </tr>
@@ -109,6 +115,14 @@ const Dashboard = () => {
         </div>
         <div></div>
       </div>
+      <Modal
+        title="Report"
+        open={isModalOpen}
+        onCancel={() => { setIsModalOpen(false); }}
+        footer={null}
+      >
+        <ReportChart setIsModalOpen = {setIsModalOpen} />
+      </Modal>
     </>
   );
 };
