@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const IncomeReport = ({setIsModalOpen2, setIsModalOpen}) => {
+const IncomeReport = ({ setIsModalOpen2, setIsModalOpen }) => {
   const calculateTotal = (type) => {
     const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
     const filteredTransactions = transactions.filter(i => i.type === type);
@@ -11,15 +11,15 @@ const IncomeReport = ({setIsModalOpen2, setIsModalOpen}) => {
     
     filteredTransactions.forEach((i) => {
       if (!categoryTotals[i.category]) {
-        categoryTotals[i.category] = { amount: 0, descriptions: [] };
+        categoryTotals[i.category] = { Income: 0, descriptions: [] };
       }
-      categoryTotals[i.category].amount += parseFloat(i.amount);
+      categoryTotals[i.category].Income += parseFloat(i.amount); // Update to "Income"
       categoryTotals[i.category].descriptions.push(i.description);
     });
     
     const data = Object.keys(categoryTotals).map(category => ({
       name: category,
-      amount: categoryTotals[category].amount,
+      Income: categoryTotals[category].Income, // Update to "Income"
       descriptions: categoryTotals[category].descriptions.join(', ')
     }));
     
@@ -41,7 +41,7 @@ const IncomeReport = ({setIsModalOpen2, setIsModalOpen}) => {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    const initialIncomes = calculateTotal("income"); 
+    const initialIncomes = calculateTotal("income");
     setData(initialIncomes);
   }, []);
   
@@ -57,13 +57,13 @@ const IncomeReport = ({setIsModalOpen2, setIsModalOpen}) => {
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="Income" barSize={20} fill="#82ca9d" /> 
+            <Bar dataKey="Income" barSize={20} fill="#82ca9d" /> {/* Ensure dataKey matches */}
           </BarChart>
         </ResponsiveContainer>
       ) : (
         <div className="message-container">
-          <p>No Data to Display </p>
-          <button className="add_button" onClick={()=>{setIsModalOpen2(false); setIsModalOpen(true)}} >Add Incomes</button> 
+          <p>No Data to Display</p>
+          <button className="add_button" onClick={() => { setIsModalOpen2(false); setIsModalOpen(true) }}>Add Incomes</button>
         </div>
       )}
     </div>

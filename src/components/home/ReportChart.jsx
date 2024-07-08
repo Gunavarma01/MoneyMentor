@@ -61,7 +61,7 @@ const ReportChart = () => {
     <div className="reportchart_continer">
       
       {data.length ?
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={350}>
           <BarChart
             data={data}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}

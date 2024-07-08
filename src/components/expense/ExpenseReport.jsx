@@ -2,42 +2,42 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-
-const ExpenseReport = ({setIsModalOpen2, setIsModalOpen}) => {
-    const calculateTotal = (type) => {
-      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-      const filteredTransactions = transactions.filter(i => i.type === type);
-      
-      const categoryTotals = {};
-      
-      filteredTransactions.forEach((i) => {
-        if (!categoryTotals[i.category]) {
-          categoryTotals[i.category] = { amount: 0, descriptions: [] };
-        }
-        categoryTotals[i.category].amount += parseFloat(i.amount);
-        categoryTotals[i.category].descriptions.push(i.description);
-      });
-      
-      const data = Object.keys(categoryTotals).map(category => ({
-        name: category,
-        amount: categoryTotals[category].amount,
-        descriptions: categoryTotals[category].descriptions.join(', ')
-      }));
-      
-      return data;
-    };
+const ExpenseReport = ({ setIsModalOpen2, setIsModalOpen }) => {
+  const calculateTotal = (type) => {
+    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    const filteredTransactions = transactions.filter(i => i.type === type);
     
-    const CustomTooltip = ({ active, payload, label }) => {
-      if (active && payload && payload.length) {
-        return (
-          <div className="custom-tooltip">
-            <p className="label">{`${label.toUpperCase()} : ${payload[0].value.toFixed(2)}`}</p>
-            <p className="intro">{payload[0].payload.descriptions.toUpperCase()}</p>
-          </div>
-        );
+    const categoryTotals = {};
+    
+    filteredTransactions.forEach((i) => {
+      if (!categoryTotals[i.category]) {
+        categoryTotals[i.category] = { Expense: 0, descriptions: [] };
       }
-      return null;
-    };
+      categoryTotals[i.category].Expense += parseFloat(i.amount); 
+      categoryTotals[i.category].descriptions.push(i.description);
+    });
+    
+    const data = Object.keys(categoryTotals).map(category => ({
+      name: category,
+      Expense: categoryTotals[category].Expense, 
+      descriptions: categoryTotals[category].descriptions.join(', ')
+    }));
+    
+    return data;
+  };
+  
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label.toUpperCase()} : ${payload[0].value.toFixed(2)}`}</p>
+          <p className="intro">{payload[0].payload.descriptions.toUpperCase()}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const [data, setData] = useState([]);
   
   useEffect(() => {
@@ -45,7 +45,7 @@ const ExpenseReport = ({setIsModalOpen2, setIsModalOpen}) => {
     setData(initialExpenses);
   }, []);
   
-  const navigate = useNavigate();
+  
   return (
     <div className="container">
       {data.length > 0 ? (
@@ -56,13 +56,13 @@ const ExpenseReport = ({setIsModalOpen2, setIsModalOpen}) => {
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="Expense" barSize={20} fill="#8884d8" />
+            <Bar dataKey="Expense" barSize={20} fill="#8884d8" /> 
           </BarChart>
         </ResponsiveContainer>
       ) : (
         <div className="message-container">
           <p>No Data to Display </p>
-          <button className="add_button" onClick={()=>{setIsModalOpen2(false); setIsModalOpen(true)}} >Add Expenses</button>
+          <button className="add_button" onClick={() => { setIsModalOpen2(false); setIsModalOpen(true) }}>Add Expenses</button>
         </div>
       )}
     </div>

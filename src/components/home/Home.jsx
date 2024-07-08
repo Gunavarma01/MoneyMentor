@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SideBar from '../sidebar/SideBar';
 import './home.css'
 import DataContext from '../../context/DataContext';
@@ -6,24 +6,40 @@ import ReportChart from './ReportChart';
 import { Modal } from 'antd';
 
 const Dashboard = () => {
-  const { loginUserName } = useContext(DataContext);
-  const [transactions, setTransactions] = useState(JSON.parse(localStorage.getItem('transactions')) || []);
+  // const { loginUserName } = useContext(DataContext);
+  const [transactions, setTransactions] = useState([]);
+  const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    const storedTransactions = JSON.parse(localStorage.getItem('transactions'));
+    if (storedTransactions) {
+      setTransactions(storedTransactions);
+    }
+
+   
+
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+  if (userDetails && userDetails.length > 0) {
+    setUsername(userDetails[userDetails.length -1].username);}
+    
+    
+
+  }, []);
+
+  console.log(username)
+
   const calculateTotal = (type) => {
-
     const filteredTransactions = transactions.filter(i => i.type === type);
-
     const totalAmount = filteredTransactions.reduce((total, transaction) => {
       return total + parseFloat(transaction.amount);
     }, 0);
-
     return totalAmount.toFixed(2);
   };
 
-  const income = calculateTotal("income")
-  const expense = calculateTotal("expense")
-  const balance = income - expense
+  const income = parseFloat(calculateTotal("income"));
+  const expense = parseFloat(calculateTotal("expense"));
+  const balance = income - expense;
 
 
 
@@ -38,7 +54,7 @@ const Dashboard = () => {
         <div className="dashboard">
 
           <header className="header">
-            <h1 className='username' >Welcome {loginUserName}</h1>
+            <h1 className='username' >Welcome {username}</h1>
             <button className="income-report" onClick={() => { setIsModalOpen(true); }}>Report</button>
           </header>
 
@@ -93,8 +109,8 @@ const Dashboard = () => {
                     transactions.map((transaction, index) => (
                       <tr key={index} className={transaction.type}>
                         <td>{index + 1}</td>
-                        <td>{transaction.category.toUpperCase()}</td>   
-                        <td>{transaction.description.toUpperCase()}</td>   
+                        <td>{transaction.category.toUpperCase()}</td>
+                        <td>{transaction.description.toUpperCase()}</td>
                         <td>₹{parseFloat(transaction.amount).toFixed(2)}</td>
                         <td className="date">{transaction.date}</td>
                       </tr>
@@ -121,7 +137,7 @@ const Dashboard = () => {
         onCancel={() => { setIsModalOpen(false); }}
         footer={null}
       >
-        <ReportChart setIsModalOpen = {setIsModalOpen} />
+        <ReportChart setIsModalOpen={setIsModalOpen} />
       </Modal>
     </>
   );
