@@ -1,0 +1,16 @@
+/* reports.css */
+.reports {
+    display: flex;
+    gap: 2px;
+
+}
+
+.reports_content_container {
+    flex: 1;
+    
+}
+
+.re_chart{
+    margin-top: 17%;
+
+}

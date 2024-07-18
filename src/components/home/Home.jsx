@@ -13,21 +13,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     const storedTransactions = JSON.parse(localStorage.getItem('transactions'));
+    const storedItems = JSON.parse(localStorage.getItem('budgetItems')) || [];
+
     if (storedTransactions) {
       setTransactions(storedTransactions);
     }
-
-   
 
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
   if (userDetails && userDetails.length > 0) {
     setUsername(userDetails[userDetails.length -1].username);}
     
-    
-
   }, []);
 
   console.log(username)
+  // const budget = storedItems.amount
 
   const calculateTotal = (type) => {
     const filteredTransactions = transactions.filter(i => i.type === type);
@@ -40,6 +39,10 @@ const Dashboard = () => {
   const income = parseFloat(calculateTotal("income"));
   const expense = parseFloat(calculateTotal("expense"));
   const balance = income - expense;
+
+  const storedItems = JSON.parse(localStorage.getItem('budgetItems')) || [];
+
+  const totalbudget = storedItems.reduce((total, item) => total + parseFloat(item.amount), 0);
 
 
 
@@ -67,7 +70,7 @@ const Dashboard = () => {
 
             <div className="balance budgets">
               <h2>Monthly Budget</h2>
-              <p className="amount"> ₹ 00.00 </p>
+              <p className="amount">₹ {isNaN(totalbudget) ? "00.00" : totalbudget.toFixed(2)}</p>
             </div>
 
 

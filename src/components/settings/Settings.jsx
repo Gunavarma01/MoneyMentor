@@ -14,7 +14,7 @@ const Settings = () => {
                 </div>
                 <div className="content_container">
                     <center><h1>Settings</h1></center>
-                    <ExpenseReport/>
+                    {/* <ExpenseReport/> */}
                 </div>
                 <div></div>
             </div>

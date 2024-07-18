@@ -120,6 +120,7 @@ const Expense = () => {
                 className="input"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                required
               />
             </div>
             <div className='expense_form_div'>
@@ -129,6 +130,7 @@ const Expense = () => {
                 className="input"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </div>
 
@@ -139,6 +141,7 @@ const Expense = () => {
                 className="input"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                required
               />
             </div>
 
@@ -146,6 +149,7 @@ const Expense = () => {
           </form>
         </div>
       </Modal>
+
 
 
       <Modal

@@ -64,22 +64,24 @@ const Income = () => {
             >
               <div className="modal">
                 <form className="form" onSubmit={handleSubmit}>
-                  <div className='income_form_div_category' >
+                  <div className='income_form_div_category'>
                     <label className="label">Category:</label>
                     <input
                       type="text"
                       className="input"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
+                      required
                     />
                   </div>
-                  <div className='income_form_div' >
+                  <div className='income_form_div'>
                     <label className="label">Description:</label>
                     <input
                       type="text"
                       className="input"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
+                      required
                     />
                   </div>
 
@@ -90,6 +92,7 @@ const Income = () => {
                       className="input"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
+                      required
                     />
                   </div>
 
@@ -153,7 +156,7 @@ const Income = () => {
         onCancel={() => { setIsModalOpen2(false); }}
         footer={null}
       >
-        <IncomeReport setIsModalOpen2= {setIsModalOpen2} setIsModalOpen = {setIsModalOpen} />
+        <IncomeReport setIsModalOpen2={setIsModalOpen2} setIsModalOpen={setIsModalOpen} />
       </Modal>
     </>
   );

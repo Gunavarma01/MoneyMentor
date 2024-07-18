@@ -44,21 +44,21 @@ const SideBar = () => {
       icon: <FcMoneyTransfer />
     },
     {
-      path: "/saving",
-      name: "Saving",
-      icon: <MdOutlineSavings />
-    },
-    {
       path: "/reports",
       name: "Reports",
       icon: <TbReportAnalytics />
     }
     ,
-    {
-      path: "/settings",
-      name: "Settings",
-      icon: <IoSettings />
-    }
+    // {
+    //   path: "/saving",
+    //   name: "Saving",
+    //   icon: <MdOutlineSavings />
+    // },
+    // {
+    //   path: "/settings",
+    //   name: "Settings",
+    //   icon: <IoSettings />
+    // }
   ]
   return (
     <div className="container">
