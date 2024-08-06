@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import axios from 'axios';
 
 const IncomeReport = ({ setIsModalOpen2, setIsModalOpen }) => {
-  const calculateTotal = (type) => {
-    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-    const filteredTransactions = transactions.filter(i => i.type === type);
-    
+  const [data, setData] = useState([]);
+
+  const calculateTotal = (transactions) => {
+    const filteredTransactions = transactions;
+
     const categoryTotals = {};
-    
+
     filteredTransactions.forEach((i) => {
       if (!categoryTotals[i.category]) {
         categoryTotals[i.category] = { Income: 0, descriptions: [] };
       }
-      categoryTotals[i.category].Income += parseFloat(i.amount); // Update to "Income"
+      categoryTotals[i.category].Income += parseFloat(i.amount);
       categoryTotals[i.category].descriptions.push(i.description);
     });
-    
+
     const data = Object.keys(categoryTotals).map(category => ({
       name: category,
-      Income: categoryTotals[category].Income, // Update to "Income"
+      Income: categoryTotals[category].Income,
       descriptions: categoryTotals[category].descriptions.join(', ')
     }));
-    
+
     return data;
   };
-  
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -38,15 +40,30 @@ const IncomeReport = ({ setIsModalOpen2, setIsModalOpen }) => {
     return null;
   };
 
-  const [data, setData] = useState([]);
-  
   useEffect(() => {
-    const initialIncomes = calculateTotal("income");
-    setData(initialIncomes);
+    const fetchIncomeData = async () => {
+      const userIdString = localStorage.getItem('userId');
+      const userId = parseInt(userIdString, 10);
+
+      if (isNaN(userId)) {
+        console.error('Invalid user ID:', userIdString);
+        return;
+      }
+
+      try {
+        const response = await axios.get(`http://localhost:5000/api/income/${userId}`);
+        const initialIncomes = calculateTotal(response.data);
+        setData(initialIncomes);
+      } catch (error) {
+        console.error('Error fetching income data:', error);
+      }
+    };
+
+    fetchIncomeData();
   }, []);
-  
+
   const navigate = useNavigate();
-  
+
   return (
     <div className="container">
       {data.length > 0 ? (
@@ -57,7 +74,7 @@ const IncomeReport = ({ setIsModalOpen2, setIsModalOpen }) => {
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="Income" barSize={20} fill="#82ca9d" /> {/* Ensure dataKey matches */}
+            <Bar dataKey="Income" barSize={20} fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
       ) : (

@@ -2,48 +2,16 @@
 .container{
     background-color: whitesmoke;
 }
-.budget_form {
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px;
-    width: 30%;
-    height: 430px;
-    
-}
-.budget_container{
-    display: flex;
-}
 
-.budget_item{
-    width: 70vw;
-    margin: 20px;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 80vh;
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: scroll;
-}
-
-
-h1, h2 {
-    color: #333;
-    text-align: center;
-}
 
 .budget-list ul {
     list-style: none;
-    padding: 0;
+    padding: 30px;
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 20px;
+    margin-left: 20px;
     
 
 }
@@ -71,53 +39,165 @@ h1, h2 {
 
 
 
+/* new */
+
+
+/* General Container Styles */
+.budget-container {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+/* Modal Styles */
+.budget-modal {
+    border-radius: 8px;
+}
+
+/* Form Styles */
 .budget-form {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.budget-form div {
-    margin-bottom: 10px;
+.form-group {
+    display: flex;
+    flex-direction: column;
 }
 
-.budget-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+.form-label {
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.budget-form input, 
-.budget-form select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.budget-form button {
-    width: 100%;
+.form-input {
     padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.submit-button {
+    padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
 }
 
-.budget-form button:hover {
+.submit-button:hover {
     background-color: #0056b3;
 }
 
-.btotal{
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    position: relative;
-    right: -30%;
-    top: 15px;
-    border-radius: 5px;
-    background-color: white;
-    text-align: center;
-    padding: 5px;
+/* Page Header Styles */
+.page-title {
+    font-size: 24px;
+    margin-bottom: 16px;
 }
+
+.total-budget {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+/* Controls and List Styles */
+.budget-controls {
+    margin-bottom: 16px;
+}
+
+.add-item-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-item-button:hover {
+    background-color: #218838;
+}
+
+.budget-list {
+    list-style: none;
+    padding: 0;
+    /* border: 10px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    width: 80vw;
+    margin-top: 40px;
+    border-radius: 20px;
+    height: 72vh;
+    overflow: scroll; 
+    box-sizing: border-box; 
+    background-color: whitesmoke;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.budget-item {
+    margin-bottom: 16px;
+}
+
+.budget-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    width: 330px;
+    height: 360px;
+}
+
+.item-amount, .item-description, .item-expenses {
+    margin: 8px 0;
+}
+
+.budget-progress {
+    margin: 16px 0;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.edit-button:hover {
+    background-color: #e0a800;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.no-data {
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+}
+
+.budloading-container {
+    margin-left: -10%;
+    margin-top: 200%;
+   }

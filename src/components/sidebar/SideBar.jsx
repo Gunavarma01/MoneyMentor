@@ -9,7 +9,7 @@ import { GrMoney } from "react-icons/gr";
 import { MdOutlineSavings } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoSettings } from "react-icons/io5";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
 import mmlog from '../assert/mmlogo.jpeg';
 import { IoMdArrowDroprightCircle } from "react-icons/io";
@@ -20,6 +20,7 @@ import DataContext from '../../context/DataContext';
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const navigate = useNavigate()
   const { loginUserName, page } = useContext(DataContext);
   const menuItem = [
     {
@@ -64,7 +65,7 @@ const SideBar = () => {
     <div className="container">
       <div className="sidebar">
         <div className="top_section">
-          <div className='logo_name' >
+          <div className='logo_name' onClick={()=>{navigate('/home')}} >
             <img className="logo" src={mmlog} alt={mmlog} />
             <div className='title' >
               <span className='money'>Money</span ><span className='mentor'>Mentor</span>

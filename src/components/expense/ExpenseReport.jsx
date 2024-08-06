@@ -1,31 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const ExpenseReport = ({ setIsModalOpen2, setIsModalOpen }) => {
-  const calculateTotal = (type) => {
-    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-    const filteredTransactions = transactions.filter(i => i.type === type);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const calculateTotal = (expenses) => {
+    const filteredExpenses = expenses; // Directly use the fetched expenses
     
     const categoryTotals = {};
     
-    filteredTransactions.forEach((i) => {
+    filteredExpenses.forEach((i) => {
       if (!categoryTotals[i.category]) {
         categoryTotals[i.category] = { Expense: 0, descriptions: [] };
       }
-      categoryTotals[i.category].Expense += parseFloat(i.amount); 
+      categoryTotals[i.category].Expense += parseFloat(i.amount);
       categoryTotals[i.category].descriptions.push(i.description);
     });
     
     const data = Object.keys(categoryTotals).map(category => ({
       name: category,
-      Expense: categoryTotals[category].Expense, 
+      Expense: categoryTotals[category].Expense,
       descriptions: categoryTotals[category].descriptions.join(', ')
     }));
     
     return data;
   };
-  
+
+  const fetchExpenses = async () => {
+    const userId = localStorage.getItem('userId');
+    
+    if (isNaN(userId)) {
+      console.error('Invalid user ID:', userId);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:5000/api/expense/${userId}`);
+      const initialExpenses = calculateTotal(response.data);
+      setData(initialExpenses);
+    } catch (error) {
+      console.error('Error fetching expenses:', error);
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -38,14 +65,9 @@ const ExpenseReport = ({ setIsModalOpen2, setIsModalOpen }) => {
     return null;
   };
 
-  const [data, setData] = useState([]);
-  
-  useEffect(() => {
-    const initialExpenses = calculateTotal("expense");
-    setData(initialExpenses);
-  }, []);
-  
-  
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="container">
       {data.length > 0 ? (
@@ -56,7 +78,7 @@ const ExpenseReport = ({ setIsModalOpen2, setIsModalOpen }) => {
             <YAxis />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="Expense" barSize={20} fill="#8884d8" /> 
+            <Bar dataKey="Expense" barSize={20} fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       ) : (

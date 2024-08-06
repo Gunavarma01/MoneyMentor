@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './register.css';
 import { useNavigate } from 'react-router-dom';
 import { notification } from 'antd';
+import axios from 'axios';
 import loginimg from '../assert/login.jpg';
-import mmlog from '../assert/mmlogo.jpeg'
+import mmlog from '../assert/mmlogo.jpeg';
 
 function Register() {
   const [api, contextHolder] = notification.useNotification();
+  const navigate = useNavigate();
 
   const openNotification = (placement) => {
     api.success({
@@ -22,42 +24,51 @@ function Register() {
       ),
       placement,
       duration: 1.5,
-      onClose: () => {
-        page('/');
-      },
       style: {
-        background: "white",
+        background: 'white',
         borderRadius: '10px',
       },
     });
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   };
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCPassword] = useState('');
+  const [userId, setUserId] = useState('');
 
   const [usernameError, setUsernameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [cpasswordError, setCPasswordError] = useState('');
+  const [userIdError, setUserIdError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateInputs()) {
-      
       const userDetails = {
+        user_id: userId, // Include user_id
         username,
         email,
-        password
+        password,
       };
 
-      const existingUsers = JSON.parse(localStorage.getItem('userDetails')) || [];
-      existingUsers.push(userDetails);
-      localStorage.setItem('userDetails', JSON.stringify(existingUsers));
-
-      openNotification('bottomLeft');
-      console.log('Form submitted successfully');
+      try {
+        const response = await axios.post('http://localhost:5000/api/users', userDetails);
+        if (response.status === 201) {
+          openNotification('bottomLeft');
+          console.log('User created successfully');
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          setEmailError('Email already exists');
+        } else {
+          console.error('An error occurred while creating the user:', error);
+        }
+      }
     }
   };
 
@@ -70,8 +81,7 @@ function Register() {
     } else if (username.length < 4) {
       success = false;
       setUsernameError('Username must be at least 4 characters long');
-    }
-    else {
+    } else {
       setUsernameError('');
     }
 
@@ -88,21 +98,28 @@ function Register() {
     if (password === '') {
       success = false;
       setPasswordError('Password is required');
-    } else if (password.length < 8) {
+    } else if (password.length < 3) {
       success = false;
-      setPasswordError('Password must be at least 8 characters long');
+      setPasswordError('Password must be at least 3 characters long');
     } else {
       setPasswordError('');
     }
 
-    if (cpassword === '') {
+    // if (cpassword === '') {
+    //   success = false;
+    //   setCPasswordError('Confirm password is required');
+    // } else if (cpassword !== password) {
+    //   success = false;
+    //   setCPasswordError('Password does not match');
+    // } else {
+    //   setCPasswordError('');
+    // }
+
+    if (userId.trim() === '') {
       success = false;
-      setCPasswordError('Confirm password is required');
-    } else if (cpassword !== password) {
-      success = false;
-      setCPasswordError('Password does not match');
+      setUserIdError('User ID is required');
     } else {
-      setCPasswordError('');
+      setUserIdError('');
     }
 
     return success;
@@ -116,8 +133,6 @@ function Register() {
       );
   };
 
-  const page = useNavigate();
-
   return (
     <div className="login">
       <div className='r'>
@@ -127,7 +142,7 @@ function Register() {
       </div>
 
       <div className="registerncontainer">
-        <div style={{ backgroundColor: "limegreen" }}>
+        <div style={{ backgroundColor: 'limegreen' }}>
           {contextHolder}
         </div>
         <form onSubmit={handleSubmit} className='form'>
@@ -135,8 +150,12 @@ function Register() {
             <img className='mmlogo' src={mmlog} alt='mmlogo' />
           </div>
           <div>
-            <span style={{ fontFamily: 'cursive', fontSize: "12px", fontWeight: "555", color: 'gray' }}>Welcome To Our Website &#x1F44B; </span>
-            <p style={{ fontFamily: 'cursive', fontSize: "11px", fontWeight: "555", color: 'gray' }}>Enter your details below to create your account and get started.</p>
+            <span style={{ fontFamily: 'cursive', fontSize: '12px', fontWeight: '555', color: 'gray' }}>
+              Welcome To Our Website &#x1F44B;
+            </span>
+            <p style={{ fontFamily: 'cursive', fontSize: '11px', fontWeight: '555', color: 'gray' }}>
+              Enter your details below to create your account and get started.
+            </p>
           </div>
           <div className={`input-group ${usernameError && 'error'}`}>
             <input
@@ -171,7 +190,7 @@ function Register() {
             />
             <div className="error">{passwordError}</div>
           </div>
-          <div className={`input-group lasti ${cpasswordError && 'error'}`}>
+          {/* <div className={`input-group lasti ${cpasswordError && 'error'}`}>
             <input
               placeholder='Enter Confirm Password'
               type="password"
@@ -181,9 +200,25 @@ function Register() {
               onChange={(e) => setCPassword(e.target.value)}
             />
             <div className="error">{cpasswordError}</div>
+          </div> */}
+          <div className={`input-group ${userIdError && 'error'}`}>
+            <input
+              placeholder='Enter User ID' 
+              type="text"
+              id="user_id"
+              name="user_id"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+            <div className="error">{userIdError}</div>
           </div>
           <button type="submit" className='sign_btn'>SIGN UP</button>
-          <p style={{ textAlign: "center", fontFamily: 'cursive', marginTop: "10px" }}>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => { page('/') }}>Sign In</span></p>
+          <p style={{ textAlign: 'center', fontFamily: 'cursive', marginTop: '10px' }}>
+            Already have an account?
+            <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate('/')}>
+              Sign In
+            </span>
+          </p>
         </form>
       </div>
     </div>

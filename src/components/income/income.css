@@ -6,6 +6,8 @@
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     height: 100vh;
+    
+    
 }
 
 
@@ -191,3 +193,8 @@ th {
     margin-left: 17px;
     margin-bottom: 10px;
 }
+
+.inloading-container {
+   margin-left: 300%;
+   margin-top: 120%;
+  }
